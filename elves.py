@@ -1,17 +1,12 @@
+from file_utils import read_input_file
+
+
 def main():
     calorie_list = read_input_file("resources/day_1_actual.txt")
     elves_grouped = group_elves(calorie_list)
     elf_totals = sum_elves(elves_grouped)
     top_3_sum = get_top_three_sum(elf_totals)
     print(top_3_sum)
-
-
-def read_input_file(filename):
-    lines = []
-    with open(filename) as file:
-        for line in file:
-            lines.append(line)
-    return lines
 
 
 def group_elves(calorie_list):
