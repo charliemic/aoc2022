@@ -1,5 +1,6 @@
 import unittest
-from main import *
+from elves import *
+from file_utils import read_input_file
 
 
 class TestDay1(unittest.TestCase):
