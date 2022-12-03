@@ -2,12 +2,6 @@ from file_utils import read_input_file
 import unittest
 from game import *
 
-GAME_CONFIG = {
-    "rock": {"opponent": "A", "strategy": "X", "score": 1},
-    "paper": {"opponent": "B", "strategy": "Y", "score": 2},
-    "scissors": {"opponent": "C", "strategy": "Z", "score": 3},
-}
-
 rock = "A"
 paper = "B"
 scissors = "C"
