@@ -1,5 +1,6 @@
 import unittest
 from elves import *
+from parameterized import parameterized
 from file_utils import read_input_file
 
 
@@ -47,22 +48,20 @@ class TestDay1(unittest.TestCase):
             grouped_elves,
         )
 
-    def test_sum_elves(self):
-        sum_list = sum_elves([[1, 0], [1, 1], [2, 1]])
-        self.assertEqual([1, 2, 3], sum_list)
+    @parameterized.expand(
+        [
+            ([[1, 0], [1, 1], [2, 1]], [1, 2, 3]),
+            ([[1, 0], [1, 1], [2, 1, 1]], [1, 2, 4]),
+        ]
+    )
+    def test_sum_elves(self, inp, exp):
+        sum_list = sum_elves(inp)
+        self.assertEqual(exp, sum_list)
 
-        sum_list = sum_elves([[1, 0], [1, 1], [2, 1, 1]])
-        self.assertEqual([1, 2, 4], sum_list)
-
-    def test_get_highest_value(self):
-        max_value = get_highest_value([1, 2, 3])
-        self.assertEqual(max_value, 3)
-
-        max_value = get_highest_value([3, 2, 1])
-        self.assertEqual(max_value, 3)
-
-        max_value = get_highest_value([1.3, 7.6, 4])
-        self.assertEqual(max_value, 7.6)
+    @parameterized.expand([([1, 2, 3], 3), ([3, 2, 1], 3), ([1.3, 7.6, 4], 7.6)])
+    def test_get_highest_value(self, inp, exp):
+        max_value = get_highest_value(inp)
+        self.assertEqual(exp, max_value)
 
     def test_day_1_part_1(self):
         calorie_list = read_input_file("resources/day_1_examples.txt")

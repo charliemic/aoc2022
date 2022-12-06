@@ -1,10 +1,7 @@
 from file_utils import read_input_file
 import unittest
 from game import *
-
-rock_them, rock_me = "A", "X"
-paper_them, paper_me = "B", "Y"
-scissors_them, scissors_me = "C", "Z"
+from parameterized import parameterized
 
 
 class TestDayPart1(unittest.TestCase):
@@ -13,32 +10,21 @@ class TestDayPart1(unittest.TestCase):
         total = sum_scores(guess_list)
         self.assertEqual(15, total)
 
-    def test_rock_draw(self):
-        self.assertEqual(score(rock_them, rock_me), 4)
-
-    def test_paper_draw(self):
-        self.assertEqual(score(paper_them, paper_me), 5)
-
-    def test_scissors_draw(self):
-        self.assertEqual(score(scissors_them, scissors_me), 6)
-
-    def test_rock_vs_paper(self):
-        self.assertEqual(score(rock_them, paper_me), 8)
-
-    def test_rock_vs_scissors(self):
-        self.assertEqual(score(rock_them, scissors_me), 3)
-
-    def test_paper_vs_rock(self):
-        self.assertEqual(score(paper_them, rock_me), 1)
-
-    def test_paper_vs_scissors(self):
-        self.assertEqual(score(paper_them, scissors_me), 9)
-
-    def test_scissors_vs_rock(self):
-        self.assertEqual(score(scissors_them, rock_me), 7)
-
-    def test_scissors_vs_paper(self):
-        self.assertEqual(score(scissors_them, paper_me), 2)
+    @parameterized.expand(
+        [
+            ("rock_draw", "A", "X", 4),
+            ("paper_draw", "B", "Y", 5),
+            ("scissors_draw", "C", "Z", 6),
+            ("rock_paper", "A", "Y", 8),
+            ("rock_scissors", "A", "Z", 3),
+            ("paper_rock", "B", "X", 1),
+            ("paper_scissors", "B", "Z", 9),
+            ("scissors_rock", "C", "X", 7),
+            ("scissors_paper", "C", "Y", 2),
+        ]
+    )
+    def test_score(self, name, them, me, exp):
+        self.assertEqual(exp, score(them, me))
 
 
 if __name__ == "__main__":

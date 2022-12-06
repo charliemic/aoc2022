@@ -5,20 +5,26 @@ NUMBERS = "123456789"
 
 def main():
     read_input = read_input_file("resources/day_5_actual.txt")
-    model = model_stacks(read_input)
-    model = reverse_stacks(model)
+    model, commands = parse_input(read_input)
+    message = execute_commands(model, commands)
+    print(message)
 
-    commands = get_command_list(read_input)
 
+def parse_input(input_data):
+    model = model_stacks(input_data)
+    commands = get_command_list(input_data)
+    return model, commands
+
+
+def execute_commands(stacks, commands):
     for command in commands:
-        model = move(model, command)
+        model = move(stacks, command)
 
     message = ""
-    for stack in model:
-        message += model[stack][-1]
+    for stack in stacks:
+        message += stacks[stack][-1]
 
-    print(model)
-    print(message)
+    return message
 
 
 def model_stacks(input_data):
@@ -26,6 +32,8 @@ def model_stacks(input_data):
     for line in input_data:
         width = len(line)
         if line[5] in NUMBERS:
+            for stack in stacks:
+                stacks[stack].reverse()
             return stacks
         for i in range(0, (width // 4)):
             stack = i + 1
@@ -34,12 +42,6 @@ def model_stacks(input_data):
                 stacks[stack] = []
             if not entry == " ":
                 stacks[stack].append(entry)
-
-
-def reverse_stacks(stacks):
-    for stack in stacks:
-        stacks[stack].reverse()
-    return stacks
 
 
 def move(stacks, command):
